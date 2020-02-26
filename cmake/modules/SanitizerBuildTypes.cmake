@@ -22,7 +22,7 @@ It is possible to only provide a subset of these variables to only create build 
 #]=======================================================================]
 function(sanitizer_build_types)
 
-  if(NOT ARGC EQUAL 0)
+  if(ARGC EQUAL 0)
     message(FATAL_ERROR "No arguments were given.")
   endif()
 
