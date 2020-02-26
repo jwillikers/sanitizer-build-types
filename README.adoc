@@ -23,11 +23,11 @@ It is easy to incorporate this project directly at configure time by using CMake
 [source,cmake]
 ----
 include(FetchContent)
-FetchContent_Declare(SanitizerBuildTypes GIT_REPOSITORY https://github.com/jwillikers/sanitizer-build-types GIT_TAG 0.1.0)
-FetchContent_GetProperties(SanitizerBuildTypes)
-if(NOT SanitizerBuildTypes_POPULATED)
-    FetchContent_Populate(SanitizerBuildTypes)
-    list(APPEND CMAKE_MODULE_PATH ${SanitizerBuildTypes_SOURCE_DIR}/cmake/modules)
+FetchContent_Declare(sanitizer-build-types GIT_REPOSITORY https://github.com/jwillikers/sanitizer-build-types GIT_TAG 0.1.0)
+FetchContent_GetProperties(sanitizer-build-types)
+if(NOT sanitizer-build-types_POPULATED)
+    FetchContent_Populate(sanitizer-build-types)
+    list(APPEND CMAKE_MODULE_PATH ${sanitizer-build-types_SOURCE_DIR}/cmake/modules)
 endif()
 ----
 
