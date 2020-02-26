@@ -7,7 +7,7 @@ A CMake module for adding the necessary flags for the various sanitizers.
 The flags are added to the designated build types / configurations provided by the caller.
 
 NOTE: Only LLVM Clang and GCC are supported at this time.
-MSVC supports ASAN for 32-bit build at the time of this writing, but this has not been implemented yet.
+MSVC supports ASAN for 32-bit builds at the time of this writing, but this has not been implemented yet.
 
 == Configure
 
@@ -20,17 +20,17 @@ FetchContent_Declare(SanitizerBuildTypes GIT_REPOSITORY https://github.com/jwill
 FetchContent_GetProperties(SanitizerBuildTypes)
 if(NOT SanitizerBuildTypes_POPULATED)
     FetchContent_Populate(SanitizerBuildTypes)
-    list(APPEND CMAKE_MODULE_PATH ${SanitizerBuildTypes}/cmake/modules)
+    list(APPEND CMAKE_MODULE_PATH ${SanitizerBuildTypes_SOURCE_DIR}/cmake/modules)
 endif()
 ----
 
 == Usage
 
-To use, just include the `SanitizerBuildTypes` module, and call the `sanitizer_build_types` function like follows.
+To use, just include the `SanitizerBuildTypes` module, and call the `sanitizer_build_types` function as follows.
 [source,cmake]
 ----
 include(SanitizerBuildTypes)
-sanitizer_build_types(ASAN AddressSanitizer LSAN LeakSanitizer MSAN MemorySanitizer TSAN ThreadSanatizer UBSAN UndefinedBehaviorSanitizer)
+sanitizer_build_types(ASAN AddressSanitizer LSAN LeakSanitizer MSAN MemorySanitizer TSAN ThreadSanitizer UBSAN UndefinedBehaviorSanitizer)
 ----
 
 The only arguments required are the names of the configurations.
@@ -42,11 +42,11 @@ For a single-configuration generator, this build type can be enabled from the bu
 cmake -DCMAKE_BUILD_TYPE=AddressSanitizer ..
 ----
 
-For multi-configuration generators use the `-c` flag instead.
+For multi-configuration generators, use the `--config` flag in conjunction with the `--build` flag to designate the build configuration.
 
 [source,cmake]
 ----
-cmake -c AddressSanitizer ..
+cmake --build .. --config AddressSanitizer
 ----
 
 NOTE: It is not necessary to define build types for _all_ 5 sanitizers.
