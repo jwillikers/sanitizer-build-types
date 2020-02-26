@@ -1,0 +1,61 @@
+= sanitizer-build-types
+Jordan Williams
+
+== Summary
+
+A CMake module for adding the necessary flags for the various sanitizers.
+The flags are added to the designated build types / configurations provided by the caller.
+
+NOTE: Only LLVM Clang and GCC are supported at this time.
+MSVC supports ASAN for 32-bit build at the time of this writing, but this has not been implemented yet.
+
+== Configure
+
+It is easy to incorporate this project directly at configure time by using CMake's https://cmake.org/cmake/help/latest/module/FetchContent.html[FetchContent] module.
+
+[source,cmake]
+----
+include(FetchContent)
+FetchContent_Declare(SanitizerBuildTypes GIT_REPOSITORY https://github.com/jwillikers/sanitizer-build-types GIT_TAG 0.1.0)
+FetchContent_GetProperties(SanitizerBuildTypes)
+if(NOT SanitizerBuildTypes_POPULATED)
+    FetchContent_Populate(SanitizerBuildTypes)
+    list(APPEND CMAKE_MODULE_PATH ${SanitizerBuildTypes}/cmake/modules)
+endif()
+----
+
+== Usage
+
+To use, just include the `SanitizerBuildTypes` module, and call the `sanitizer_build_types` function like follows.
+[source,cmake]
+----
+include(SanitizerBuildTypes)
+sanitizer_build_types(ASAN AddressSanitizer LSAN LeakSanitizer MSAN MemorySanitizer TSAN ThreadSanatizer UBSAN UndefinedBehaviorSanitizer)
+----
+
+The only arguments required are the names of the configurations.
+In the previous example, the build type `AddressSanitizer` has been configured as a debug build and given the necessary compile and link flags to enable the Address Sanitizer. 
+For a single-configuration generator, this build type can be enabled from the build directory like so:
+
+[source,cmake]
+----
+cmake -DCMAKE_BUILD_TYPE=AddressSanitizer ..
+----
+
+For multi-configuration generators use the `-c` flag instead.
+
+[source,cmake]
+----
+cmake -c AddressSanitizer ..
+----
+
+NOTE: It is not necessary to define build types for _all_ 5 sanitizers.
+Feel free to omit those you don't want.
+
+== License
+
+See link:./LICENSE[Apache 2.0 License].
+
+== Authors
+
+{author}
