@@ -54,7 +54,7 @@ Feel free to omit those you don't want.
 
 == License
 
-See link:./LICENSE[Apache 2.0 License].
+This project is licensed under the link:./LICENSE[Apache 2.0 License].
 
 == Authors
 
